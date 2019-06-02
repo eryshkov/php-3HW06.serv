@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\Task;
+use App\Repository\TaskRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,29 +14,30 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class TaskEmailSendCommand extends Command
 {
     protected static $defaultName = 'app:task:email:send';
-
+    /**
+     * @var TaskRepository
+     */
+    private $taskRepository;
+    
+    public function __construct(?string $name = null, TaskRepository $taskRepository)
+    {
+        parent::__construct($name);
+        $this->taskRepository = $taskRepository;
+    }
+    
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->setDescription('This task sends emails')
         ;
     }
-
+    
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
-        }
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
+        
+        
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 }
