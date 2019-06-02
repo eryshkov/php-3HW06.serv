@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Repository\TaskRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\Console\Command\Command;
@@ -26,13 +27,18 @@ class TaskEmailSendCommand extends Command
      * @var Environment
      */
     private $templating;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
     
-    public function __construct(?string $name = null, TaskRepository $taskRepository, Swift_Mailer $mailer, Environment $templating)
+    public function __construct(?string $name = null, TaskRepository $taskRepository, Swift_Mailer $mailer, Environment $templating, EntityManagerInterface $entityManager)
     {
         parent::__construct($name);
         $this->taskRepository = $taskRepository;
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->entityManager = $entityManager;
     }
     
     protected function configure()
@@ -45,10 +51,19 @@ class TaskEmailSendCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-    
+        
+        $emailCount = 0;
         do {
-            $lastTask = $this->taskRepository->getOneFirstUndone();
+            $currentTask = $this->taskRepository->getOneFirstUndone();
     
+            if (!isset($currentTask)) {
+                break;
+            }
+    
+            $currentTask->setStatus('Pending');
+            $this->entityManager->persist($currentTask);
+            $this->entityManager->flush();
+            
             $message = (new Swift_Message('Hello Email'))
                 ->setFrom('dwebbo@bk.ru')
                 ->setTo('eryshkov@gmail.com')
@@ -61,8 +76,17 @@ class TaskEmailSendCommand extends Command
                 );
     
             $result = $this->mailer->send($message);
-        } while (false);
+            
+            if (0 !== $result) {
+                $emailCount++;
+            }
+        } while (true);
     
-        $io->success('Emails were sent! Pass --help to see your options.');
+    
+        if ($emailCount > 0) {
+            $io->success($emailCount . ' emails were sent!');
+        } else {
+            $io->error('No emails were sent!');
+        }
     }
 }
