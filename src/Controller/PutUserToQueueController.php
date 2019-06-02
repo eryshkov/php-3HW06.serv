@@ -21,12 +21,6 @@ class PutUserToQueueController extends AbstractController
         /** @var array $data */
         $data = json_decode($request->getContent(), true);
     
-//        'user_id' => $user->getId(),
-//            'template_name' => 'test_template',
-//            'template_params' => [
-//        'from' => 'admin',
-//        'message' => 'Hello, ',
-//    ],
         $user = $userRepository->findOneBy([
             'id' => $data['user_id'],
         ]);
@@ -44,7 +38,6 @@ class PutUserToQueueController extends AbstractController
     
         $entityManager->persist($task);
         $entityManager->flush();
-        
         
         return $this->json([
             'message' => 'Task accepted',
