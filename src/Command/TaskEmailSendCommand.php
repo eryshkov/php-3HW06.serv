@@ -55,14 +55,14 @@ class TaskEmailSendCommand extends Command
                 ->setBody(
                     $this->templating->render(
                         'emails/test_template.html.twig',
-                        ['name' => $name]
+                        ['name' => 'test']
                     ),
                     'text/html'
                 );
     
             $result = $this->mailer->send($message);
-        } while (null !== $lastTask);
+        } while (false);
     
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $io->success('Emails were sent! Pass --help to see your options.');
     }
 }
