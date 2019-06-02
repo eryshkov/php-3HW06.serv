@@ -40,7 +40,7 @@ class PutUserToQueueController extends AbstractController
         $entityManager->flush();
         
         return $this->json([
-            'message' => 'Task accepted',
+            'response' => 'Task accepted',
         ], JsonResponse::HTTP_OK);
     }
 }
