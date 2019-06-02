@@ -23,9 +23,10 @@ class TaskRepository extends ServiceEntityRepository
      * @return Task|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getOneFirst(): ?Task
+    public function getOneFirstUndone(): ?Task
     {
         return $this->createQueryBuilder('t')
+            ->andWhere('t.status IS NULL')
             ->orderBy('t.id', 'ASC')
             ->getQuery()
             ->getOneOrNullResult()
