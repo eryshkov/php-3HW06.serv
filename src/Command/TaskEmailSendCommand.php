@@ -36,7 +36,8 @@ class TaskEmailSendCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        
+        $lastTask = $this->taskRepository->getOneFirst();
+        dd($lastTask);
         
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
