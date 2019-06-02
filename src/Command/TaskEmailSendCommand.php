@@ -35,10 +35,11 @@ class TaskEmailSendCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-
-        $lastTask = $this->taskRepository->getOneFirstUndone();
-        dd($lastTask);
-        
+    
+        do {
+            $lastTask = $this->taskRepository->getOneFirstUndone();
+        } while (null !== $lastTask);
+    
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 }
