@@ -23,7 +23,6 @@
   сам файл находится [здесь](build/production/cron.txt)
 * решение задачи №2. Интерфейс для проверки номера занания в очереди находится [здесь](src/Controller/GetCurrentTaskController.php). Интерфейс проверки статуса задания по его номеру находится [здесь](src/Controller/GetTaskStatusByIdController.php)
 * скрипт сборки проекта находится [здесь](build/production/build.xml)
-* **главное приложение** для микросервиса находится [здесь](https://github.com/eryshkov/php-3HW06)
 * [код консольной команды](https://github.com/eryshkov/php-3HW06/blob/master/src/Command/UserSendEmailCommand.php) для постановки заданий в очередь
 * [код интерфейса](https://github.com/eryshkov/php-3HW06/blob/master/src/Controller/GetUserEmailController.php) отдающего email по ID пользователя
 * URL до главного приложения должен быть указан [здесь](config/packages/mainAppConfig.yaml)
