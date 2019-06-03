@@ -15,22 +15,18 @@ class PutUserToQueueController extends AbstractController
 {
     /**
      * @Route("/queue/put/user/", name="app_put_user_to_queue", methods={"POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     * @throws \Exception
      */
-    public function index(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function index(Request $request, EntityManagerInterface $entityManager)
     {
         /** @var array $data */
         $data = json_decode($request->getContent(), true);
         
-        $user = $userRepository->findOneBy([
-            'id' => $data['user_id'],
-        ]);
-        
-        if (!isset($user)) {
-            throw new \LogicException('User with ID=' . $data['user_id'] . ' not found');
-        }
-        
         $task = new Task();
-        $task->setUser($user);
+        $task->setUserId($data['user_id']);
         $task->setTemplateName($data['template_name']);
         $task->setTemplateParameters($data['template_params']);
         date_default_timezone_set('Europe/Moscow');
