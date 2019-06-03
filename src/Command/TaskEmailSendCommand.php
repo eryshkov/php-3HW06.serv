@@ -68,7 +68,8 @@ class TaskEmailSendCommand extends Command
             $this->entityManager->persist($currentTask);
             $this->entityManager->flush();
             
-            $userEmail = $currentTask->getUser()->getEmail();
+            //TODO: $userEmail = $currentTask->getUser()->getEmail();
+            
             $templateName = $currentTask->getTemplateName();
             $templateParameters = $currentTask->getTemplateParameters();
             
