@@ -90,7 +90,7 @@ class TaskEmailSendCommand extends Command
                 $currentTask->setCompletionDate(new DateTime());
                 $currentTask->setStatus('Error');
             }
-    
+            
             $this->entityManager->persist($currentTask);
             $this->entityManager->flush();
         } while (true);

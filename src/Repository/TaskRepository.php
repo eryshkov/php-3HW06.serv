@@ -31,10 +31,9 @@ class TaskRepository extends ServiceEntityRepository
             ->orderBy('t.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult()
-            ;
+            ->getOneOrNullResult();
     }
-
+    
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */
@@ -51,7 +50,7 @@ class TaskRepository extends ServiceEntityRepository
         ;
     }
     */
-
+    
     /*
     public function findOneBySomeField($value): ?Task
     {
