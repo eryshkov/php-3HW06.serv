@@ -17,10 +17,9 @@ class Task
     private $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $user;
+    private $userId;
     
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,18 +49,6 @@ class Task
     public function getId(): ?int
     {
         return $this->id;
-    }
-    
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-    
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-        
-        return $this;
     }
     
     public function getTemplateName(): ?string
@@ -121,6 +108,18 @@ class Task
     {
         $this->completionDate = $completionDate;
         
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $userId): self
+    {
+        $this->userId = $userId;
+
         return $this;
     }
 }
