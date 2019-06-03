@@ -13,22 +13,17 @@
 
 ## Информация для проверяющего
 * выбран фреймворк `Symfony 4`
-* для решения задачи №1.1 написан собственный [класс](src/Services/Mailer.php)
-* тест, как решение задачи №1.3 находится [здесь](tests/MailerTests.php)
-* решение задачи №2.4 находится [здесь](src/Entity/User.php)
-* скрипт сборки проекта находится [здесь](build/production/build.xml)
-* Скрипт сборки проекта должен запускаться из папки с проектом примерно так:
-    ```
-  php ./vendor/phing/phing/bin/phing -f ./build/production/build.xml -Dapp.destination.path=/Users/eugem/Developer/PHP/php-3HW03.prod -Dapp.domain=test.com -Dapp.db_driver=mysql -Dapp.db_user=eug -Dapp.db_password=123 -Dapp.db_host=php-3HW03.mac -Dapp.db_port=8889 -Dapp.db_name=php3hw03
+* решения задач №1.1 - 1.3 находятся [здесь](src/Controller/PutUserToQueueController.php)
+* для решения задачи №1.4 необходимо установить файл `crontab` при помощи команды, запущенной из папки проекта:
   ```
-  Следующие параметры должны быть обязательно указаны:
-  * `-Dapp.destination.path`
-  * `-Dapp.db_driver`
-  * `-Dapp.db_user`
-  * `-Dapp.db_password`
-  * `-Dapp.db_host`
-  * `-Dapp.db_port`
-  * `-Dapp.db_name`
+  crontab build/production/cron.txt
+  ```
+  сам файл находится [здесь](build/production/cron.txt)
+* решение задачи №2. Интерфейс для проверки номера занания в очереди находится [здесь](src/Controller/GetCurrentTaskController.php). Интерфейс проверки статуса задания по его номеру находится [здесь](src/Controller/GetTaskStatusByIdController.php)
+* скрипт сборки проекта находится [здесь](build/production/build.xml)
+* **главное приложение** для микросервиса находится [здесь](https://github.com/eryshkov/php-3HW06)
+* [код консольной команды](https://github.com/eryshkov/php-3HW06/blob/master/src/Command/UserSendEmailCommand.php) для постановки заданий в очередь
+* [код интерфейса](https://github.com/eryshkov/php-3HW06/blob/master/src/Controller/GetUserEmailController.php) отдающего email по ID пользователя
 * применена дополнительная настройка web-сервера nginx:
  <img src="/screens/nginx.png" width="50%">
 
