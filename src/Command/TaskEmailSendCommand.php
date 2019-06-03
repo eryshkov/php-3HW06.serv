@@ -46,7 +46,15 @@ class TaskEmailSendCommand extends Command
      */
     private $mainAppServiceURL;
     
-    public function __construct(?string $name = null, TaskRepository $taskRepository, Swift_Mailer $mailer, Environment $templating, EntityManagerInterface $entityManager, string $mainAppServiceURL, HttpClientInterface $httpClient)
+    public function __construct(
+        ?string $name = null,
+        TaskRepository $taskRepository,
+        Swift_Mailer $mailer,
+        Environment $templating,
+        EntityManagerInterface $entityManager,
+        string $mainAppServiceURL,
+        HttpClientInterface $httpClient
+    )
     {
         parent::__construct($name);
         $this->taskRepository = $taskRepository;
