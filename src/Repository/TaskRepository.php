@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Command\TaskEmailSendCommand;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -32,6 +33,20 @@ class TaskRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+    
+    /**
+     * @return Task|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getCurrent(): ?Task
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.status = :val')
+            ->setParameter('val', TaskEmailSendCommand::PENDING)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
     }
     
     // /**
