@@ -1,0 +1,2 @@
+parameters:
+      app.get_user_url: 'http://php-3hw06.mac/get/user/email/'
