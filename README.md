@@ -25,6 +25,7 @@
 * **главное приложение** для микросервиса находится [здесь](https://github.com/eryshkov/php-3HW06)
 * [код консольной команды](https://github.com/eryshkov/php-3HW06/blob/master/src/Command/UserSendEmailCommand.php) для постановки заданий в очередь
 * [код интерфейса](https://github.com/eryshkov/php-3HW06/blob/master/src/Controller/GetUserEmailController.php) отдающего email по ID пользователя
+* URL до главного приложения должен быть указан [здесь](config/packages/mainAppConfig.yaml)
 * применена дополнительная настройка web-сервера nginx:
  <img src="/screens/nginx.png" width="50%">
 
