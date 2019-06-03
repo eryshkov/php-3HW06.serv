@@ -85,7 +85,7 @@ class TaskEmailSendCommand extends Command
             if (0 !== $result) {
                 $emailCount += $result;
                 $currentTask->setCompletionDate(new DateTime());
-                $currentTask->setStatus('Success');
+                $currentTask->setStatus('Sent');
             } else {
                 $currentTask->setCompletionDate(new DateTime());
                 $currentTask->setStatus('Error');
