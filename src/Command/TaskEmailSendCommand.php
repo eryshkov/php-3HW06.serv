@@ -15,6 +15,10 @@ use Twig\Environment;
 
 class TaskEmailSendCommand extends Command
 {
+    public const PENDING = 'Pending';
+    public const SENT = 'Sent';
+    public const ERROR = 'Error';
+    
     protected static $defaultName = 'app:task:email:send';
     /**
      * @var TaskRepository
