@@ -14,6 +14,7 @@
 ## Информация для проверяющего
 * выбран фреймворк `Symfony 4`
 * решения задач №1.1 - 1.3 находятся [здесь](src/Controller/PutUserToQueueController.php)
+* код консольной команды для запуска рассылки находится [здесь](src/Command/TaskEmailSendCommand.php)
 * для решения задачи №1.4 необходимо установить файл `crontab` при помощи команды, запущенной из папки проекта:
   ```
   crontab build/production/cron.txt
