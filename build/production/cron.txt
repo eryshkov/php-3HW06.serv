@@ -1,4 +1,4 @@
 # m h dom mon dow command
-#minutly statistics calculations
+#runs every 5 minutes
 0/5 * * * * php /Users/eugem/Developer/PHP/php-3HW06.serv/bin/console app:task:email:send
 
