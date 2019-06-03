@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Twig\Environment;
 
 class TaskEmailSendCommand extends Command
@@ -36,14 +37,24 @@ class TaskEmailSendCommand extends Command
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var HttpClientInterface
+     */
+    private $httpClient;
+    /**
+     * @var string
+     */
+    private $mainAppServiceURL;
     
-    public function __construct(?string $name = null, TaskRepository $taskRepository, Swift_Mailer $mailer, Environment $templating, EntityManagerInterface $entityManager, string $mainAppServiceURL)
+    public function __construct(?string $name = null, TaskRepository $taskRepository, Swift_Mailer $mailer, Environment $templating, EntityManagerInterface $entityManager, string $mainAppServiceURL, HttpClientInterface $httpClient)
     {
         parent::__construct($name);
         $this->taskRepository = $taskRepository;
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->entityManager = $entityManager;
+        $this->httpClient = $httpClient;
+        $this->mainAppServiceURL = $mainAppServiceURL;
     }
     
     protected function configure()
@@ -68,7 +79,10 @@ class TaskEmailSendCommand extends Command
             $this->entityManager->persist($currentTask);
             $this->entityManager->flush();
             
-            //TODO: $userEmail = $currentTask->getUser()->getEmail();
+            $response = $this->httpClient->request(
+                'GET',
+                $this->mainAppServiceURL . $currentTask->getUserId());
+            $userEmail = $response->toArray()['email'];
             
             $templateName = $currentTask->getTemplateName();
             $templateParameters = $currentTask->getTemplateParameters();
@@ -85,7 +99,6 @@ class TaskEmailSendCommand extends Command
                 );
             
             $result = $this->mailer->send($message);
-            $io->note($userEmail);
             
             if (0 !== $result) {
                 $emailCount += $result;
