@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        <div class="col text-center">
-            <h1>test_template.html.twig</h1>
-        </div>
-    </div>
+    <h2>This email from {{ from }}</h2>
+    <h5>{{ message }}</h5>
 {% endblock %}

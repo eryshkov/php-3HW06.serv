@@ -44,8 +44,7 @@ class TaskEmailSendCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('This task sends emails')
-        ;
+            ->setDescription('This task sends emails');
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -55,34 +54,38 @@ class TaskEmailSendCommand extends Command
         $emailCount = 0;
         do {
             $currentTask = $this->taskRepository->getOneFirstUndone();
-    
+            
             if (!isset($currentTask)) {
                 break;
             }
-    
+            
             $currentTask->setStatus('Pending');
             $this->entityManager->persist($currentTask);
             $this->entityManager->flush();
             
+            $userEmail = $currentTask->getUser()->getEmail();
+            $templateName = $currentTask->getTemplateName();
+            $templateParameters = $currentTask->getTemplateParameters();
+            
             $message = (new Swift_Message('Hello Email'))
-                ->setFrom('dwebbo@bk.ru')
-                ->setTo('eryshkov@gmail.com')
+                ->setFrom(['dwebbo@bk.ru' => 'INFO'])
+                ->setTo($userEmail)
                 ->setBody(
                     $this->templating->render(
-                        'emails/test_template.html.twig',
-                        ['name' => 'test']
+                        'emails/' . $templateName,
+                        $templateParameters
                     ),
                     'text/html'
                 );
-    
+            
             $result = $this->mailer->send($message);
             
             if (0 !== $result) {
                 $emailCount++;
             }
         } while (true);
-    
-    
+        
+        
         if ($emailCount > 0) {
             $io->success($emailCount . ' emails were sent!');
         } else {
