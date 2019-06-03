@@ -27,7 +27,9 @@ class TaskRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.status IS NULL')
+            ->orderBy('t.creationDate', 'ASC')
             ->orderBy('t.id', 'ASC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
             ;

@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Repository\TaskRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Swift_Mailer;
 use Swift_Message;
@@ -79,10 +80,19 @@ class TaskEmailSendCommand extends Command
                 );
             
             $result = $this->mailer->send($message);
+            $io->note($userEmail);
             
             if (0 !== $result) {
-                $emailCount++;
+                $emailCount += $result;
+                $currentTask->setCompletionDate(new DateTime());
+                $currentTask->setStatus('Success');
+            } else {
+                $currentTask->setCompletionDate(new DateTime());
+                $currentTask->setStatus('Error');
             }
+    
+            $this->entityManager->persist($currentTask);
+            $this->entityManager->flush();
         } while (true);
         
         
