@@ -47,13 +47,13 @@ class TaskEmailSendCommand extends Command
     private $mainAppServiceURL;
     
     public function __construct(
-        ?string $name = null,
         TaskRepository $taskRepository,
         Swift_Mailer $mailer,
         Environment $templating,
         EntityManagerInterface $entityManager,
         string $mainAppServiceURL,
-        HttpClientInterface $httpClient
+        HttpClientInterface $httpClient,
+        ?string $name = null
     )
     {
         parent::__construct($name);
